@@ -4,24 +4,21 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const startBtn = document.querySelector('button[data-start]');
 startBtn.disabled = true;
- 
+
 const timer = {
   deadline: new Date(),
   intervalId: null,
   rootSelector: document.querySelector('.timer'),
-   
 
   start() {
     this.intervalId = setInterval(() => {
       const diff = this.deadline - Date.now();
-       
+
       if (diff < 500) {
         this.stop();
-       
-          return;
-         }
-        
-       
+
+        return;
+      }
 
       let { days, hours, minutes, seconds } = this.convertMs(diff);
 
@@ -37,8 +34,8 @@ const timer = {
         this.pad(seconds);
 
       console.log(diff);
-      }, 1000);
-    },
+    }, 1000);
+  },
 
   stop() {
     clearInterval(this.intervalId);
@@ -63,31 +60,24 @@ const timer = {
     return { days, hours, minutes, seconds };
   },
 
-
   pad(value) {
     return String(value).padStart(2, '0');
   },
 };
 
-
 function selectedDate(dataInput) {
   const currentDate = Date.now();
 
-    if (dataInput <= currentDate) {
-      
+  if (dataInput <= currentDate) {
     Notify.failure('Please choose a date in the future', {
       timeout: 6000,
-      
     });
-      startBtn.disabled = true;
-    } else {
-
-      timer.deadline = dataInput;
-      startBtn.disabled = false;  
-   
+    startBtn.disabled = true;
+  } else {
+    timer.deadline = dataInput;
+    startBtn.disabled = false;
   }
-};
-
+}
 
 const options = {
   enableTime: true,
@@ -96,7 +86,6 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     selectedDate(selectedDates[0]);
-    
   },
 };
 

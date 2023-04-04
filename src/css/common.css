@@ -16,3 +16,57 @@ img {
   display: block;
   max-width: 100%;
 }
+ 
+.timer{
+  display: flex;
+  gap: 30px;
+  font-size: 28px;
+  font-weight: 400;
+  color: rgb(20, 102, 102);
+  margin-top: 40px;
+  
+}
+
+.label{
+  font-weight: 500;
+  color:#212121;
+  text-transform: capitalize;
+}
+
+.field{
+ display: flex;
+ flex-direction: column;
+}
+
+.value{
+  margin-right: auto;
+  margin-left: auto;
+  font-weight: 600;
+  font-size: 35px;
+}
+
+.input{
+  width: 250px;
+  height: 35px;
+  margin-left: 60px;
+  padding-left: 25px;
+  border-radius: 5px;
+}
+
+.input::placeholder{
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.2;
+  
+}
+
+.button{
+  height: 35px;
+  background-color: rgb(20, 102, 102);
+  color: #fafafa;
+  border-radius: 5px;
+}
+
+.button:disabled{
+  background-color: rgba(20, 102, 102, 0.3);
+}

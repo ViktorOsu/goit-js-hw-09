@@ -3,7 +3,17 @@ import 'flatpickr/dist/flatpickr.min.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const startBtn = document.querySelector('button[data-start]');
-startBtn.disabled = true;
+
+let dataDays = document.querySelector('.value[data-days]');
+let dataHours = document.querySelector('.value[data-hours]');
+let dataMinutes = document.querySelector('.value[data-minutes]');
+let dataSeconds = document.querySelector('.value[data-seconds]');
+
+setStateButton(true);
+
+function setStateButton(state) {
+  startBtn.disabled = state;
+}
 
 const timer = {
   deadline: new Date(),
@@ -14,7 +24,7 @@ const timer = {
     this.intervalId = setInterval(() => {
       const diff = this.deadline - Date.now();
 
-      if (diff < 500) {
+      if (diff < 0) {
         this.stop();
 
         return;
@@ -22,16 +32,10 @@ const timer = {
 
       let { days, hours, minutes, seconds } = this.convertMs(diff);
 
-      console.dir(this.rootSelector);
-
-      this.rootSelector.querySelector('.value[data-days]').innerHTML =
-        this.pad(days);
-      this.rootSelector.querySelector('.value[data-hours]').innerHTML =
-        this.pad(hours);
-      this.rootSelector.querySelector('.value[data-minutes]').innerHTML =
-        this.pad(minutes);
-      this.rootSelector.querySelector('.value[data-seconds]').innerHTML =
-        this.pad(seconds);
+      dataDays.textContent = this.pad(days);
+      dataHours.textContent = this.pad(hours);
+      dataMinutes.textContent = this.pad(minutes);
+      dataSeconds.textContent = this.pad(seconds);
 
       console.log(diff);
     }, 1000);
@@ -72,10 +76,10 @@ function selectedDate(dataInput) {
     Notify.failure('Please choose a date in the future', {
       timeout: 6000,
     });
-    startBtn.disabled = true;
+    setStateButton(true);
   } else {
     timer.deadline = dataInput;
-    startBtn.disabled = false;
+    setStateButton(false);
   }
 }
 
@@ -93,7 +97,7 @@ const flatpick = flatpickr('#datetime-picker', options);
 
 const onStartClick = () => {
   timer.start();
-  startBtn.disabled = true;
+  setStateButton(true);
 };
 
 startBtn.addEventListener('click', onStartClick);
